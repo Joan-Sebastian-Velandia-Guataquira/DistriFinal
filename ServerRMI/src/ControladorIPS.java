@@ -17,7 +17,7 @@ public class ControladorIPS {
 
     private void inicializarIPS(int cantVacuna1, int cantVacuna2, int cantVacuna3) {
         try {
-            this.modelo = new IPS();
+            this.modelo = new IPS(cantVacuna1, cantVacuna2, cantVacuna3);
         } catch (Exception e) {
             System.err.println("Error inicializando IPS " + e.getMessage());
         }
@@ -28,10 +28,9 @@ public class ControladorIPS {
             this.persistencia = new Persistencia(ID);
             List<Integer> disponibilidad = persistencia.inventarioIPS();
             for (Integer integer : disponibilidad) {
-                System.out.print(integer + " " );
+                System.out.print(integer + " ");
             }
-            // controlador.inicializarIPS(disponibilidad.get(0),disponibilidad.get(1),
-            // disponibilidad.get(2));
+            controlador.inicializarIPS(disponibilidad.get(0), disponibilidad.get(1), disponibilidad.get(2));
         } catch (Exception e) {
             System.err.println("Error inciializando Persistencia " + e.getMessage());
         }
