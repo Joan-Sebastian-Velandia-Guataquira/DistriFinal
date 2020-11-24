@@ -15,9 +15,17 @@ public class ControladorIPS {
         controlador.inicializarPersistencia(ID);
     }
 
+    public IPS getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(IPS modelo) {
+        this.modelo = modelo;
+    }
+
     private void inicializarIPS(int cantVacuna1, int cantVacuna2, int cantVacuna3) {
         try {
-            this.modelo = new IPS(cantVacuna1, cantVacuna2, cantVacuna3);
+            this.setModelo(new IPS(cantVacuna1, cantVacuna2, cantVacuna3));
         } catch (Exception e) {
             System.err.println("Error inicializando IPS " + e.getMessage());
         }
