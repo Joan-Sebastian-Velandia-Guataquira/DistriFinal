@@ -1,4 +1,4 @@
-public class Tramsaccion{
+public class Transaccion{
     
     private int vacA;
     private int vacB;
