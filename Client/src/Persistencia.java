@@ -10,10 +10,10 @@ import java.util.StringTokenizer;
 
 public class Persistencia {
 
+    private static final String DELIMITER = "#";
     private int lector;
 
-    public Persistencia(int num) {
-        this.lector = num;
+    public Persistencia() {
     }
 
     public int getLector() {
@@ -43,10 +43,11 @@ public class Persistencia {
             // Lectura del fichero
             String linea;
             while ((linea = br.readLine()) != null) {
-                String[] parts = linea.split("#");
+                String[] parts = linea.split(DELIMITER);
                 String part1 = parts[3]; // 123
-                if (  !encontrado && (part1.equals(String.valueOf(this.lector)) || part1.equals("0")) ) {
-                    nuevalinea += parts[0] + "#" + parts[1] + "#" + parts[2] + "#" + String.valueOf(this.lector);
+                if (!encontrado && (part1.equals(String.valueOf(this.lector)) || part1.equals("0"))) {
+                    nuevalinea += parts[0] + DELIMITER + parts[1] + DELIMITER + parts[2] + DELIMITER
+                            + String.valueOf(this.lector);
                     input += nuevalinea + "\r\n";
                     encontrado = true;
                 } else {
@@ -58,7 +59,6 @@ public class Persistencia {
             fileOut.write(input.getBytes());
             fileOut.close();
 
-            
             StringTokenizer st = new StringTokenizer(nuevalinea, "#");
 
             while (st.hasMoreTokens()) {
@@ -85,18 +85,16 @@ public class Persistencia {
 
     }
 
-    public void EscribirFichero() {
+    public void EscribirFicheroUsuarios(String data) {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try {
-            fichero = new FileWriter("c:/prueba.txt");
+            fichero = new FileWriter(".\\Data\\Usuarios.txt");
             pw = new PrintWriter(fichero);
-
-            for (int i = 0; i < 10; i++)
-                pw.println("Linea " + i);
+            pw.println(data);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error creating usuario file " + e.getMessage());
         } finally {
             try {
                 // Nuevamente aprovechamos el finally para
@@ -107,6 +105,13 @@ public class Persistencia {
                 e2.printStackTrace();
             }
         }
+    }
+
+    public void registrarse(String[] hash) {
+        String username = hash[0];
+        String password = hash[1];
+        String data = username + DELIMITER + password;
+        EscribirFicheroUsuarios(data);
     }
 
 }
