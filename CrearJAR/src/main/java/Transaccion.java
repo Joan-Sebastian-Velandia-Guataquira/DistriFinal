@@ -13,7 +13,9 @@ public class Transaccion{
     }
 
     public int getVacB(){
+        System.out.println("mmm");
         return vacC;
+        
     }
 
     public void setVacB(int vacB){
