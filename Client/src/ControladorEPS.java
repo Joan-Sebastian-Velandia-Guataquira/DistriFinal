@@ -1,7 +1,6 @@
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import javax.swing.JOptionPane;
 
@@ -16,7 +15,30 @@ public class ControladorEPS {
         coord = new ControladorEPS();
         coord.iniciarlarPersistencia();
         coord.registrarse();
+        coord.ingresarSistemas();
         coord.iniciarEPS();
+    }
+
+    private void ingresarSistemas() {
+        String usuario = JOptionPane.showInputDialog("Ingrese su usuario");
+        String contra = JOptionPane.showInputDialog("Ingrese su contraseña");
+        String hash[] = new String[2];
+        hash = coord.seguridad(usuario, contra);
+        boolean estadoIngresoSistema = this.persistencia.IngresoSistema(hash);
+
+        if (estadoIngresoSistema) {
+
+            System.out.println("Ingreso Satisfactorio");
+            JOptionPane.showMessageDialog(null, "Ingreso satisfactoriamente", "Iniciar Sesion",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+
+            System.out.println("Datos mal");
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña erroneas, intente de nuevo ", "Iniciar Sesion",
+                    JOptionPane.WARNING_MESSAGE);
+
+        }
     }
 
     private void registrarse() {
@@ -25,17 +47,35 @@ public class ControladorEPS {
         String contra = JOptionPane.showInputDialog("Ingrese su contraseña");
         String hash[] = new String[2];
         hash = coord.seguridad(usuario, contra);
-        this.persistencia.registrarse(hash);
+        int estadoRegistro = this.persistencia.registrarse(hash);
+
+        switch (estadoRegistro) {
+            case -1:
+                System.out.println("error registrando");
+                JOptionPane.showMessageDialog(null,
+                        "Hubo un error y no se pudo registrar su usuario, intente más tarde ", "Registrarse",
+                        JOptionPane.ERROR_MESSAGE);
+                break;
+            case 0:
+                System.out.println("registrado");
+                JOptionPane.showMessageDialog(null, "Usuario Registrado satisfactoriamente", "Registrarses",
+                        JOptionPane.INFORMATION_MESSAGE);
+                break;
+            case 1:
+                System.out.println("ya registrado");
+                JOptionPane.showMessageDialog(null, "Usuario ya registrado ", "Registrarse",
+                        JOptionPane.WARNING_MESSAGE);
+                break;
+        }
     }
 
     private String[] seguridad(String usuario, String contra) {
-        String hash[] =  new String[2];
+        String hash[] = new String[2];
         String generatedPassword = null;
         String hashActual;
         try {
-            for(int j = 0; j < 2; j++)
-            {
-                if(j == 0)
+            for (int j = 0; j < 2; j++) {
+                if (j == 0)
                     hashActual = usuario;
                 else
                     hashActual = contra;
