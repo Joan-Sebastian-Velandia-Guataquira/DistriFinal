@@ -32,13 +32,13 @@ public class Persistencia {
         BufferedReader br = null;
         List<Integer> inventario = new ArrayList<Integer>();
         String nuevalinea = "";
-        int contador = 0;
-        String input="";
+        String input = "";
+        boolean encontrado = false;
 
         try {
             // Apertura del fichero y creacion de BufferedReader para poder
             // hacer una lectura comoda (disponer del metodo readLine()).
-            archivo = new File("ServerRMI\\Data\\Inventario.txt");
+            archivo = new File(".\\Data\\Inventario.txt");
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
 
@@ -47,26 +47,28 @@ public class Persistencia {
             while ((linea = br.readLine()) != null) {
                 String[] parts = linea.split("#");
                 String part1 = parts[3]; // 123
-                if (part1.equals(String.valueOf(this.lector)) || part1.equals("0")) {
+                if (  !encontrado && (part1.equals(String.valueOf(this.lector)) || part1.equals("0")) ) {
                     nuevalinea += parts[0] + "#" + parts[1] + "#" + parts[2] + "#" + String.valueOf(this.lector);
-                    input +=nuevalinea+"\r\n";
-                    break;
-                }
-                
-                else
                     input += nuevalinea + "\r\n";
-                contador++;
+                    encontrado = true;
+                } else {
+                    input += linea + "\r\n";
+                }
             }
 
-            FileOutputStream fileOut = new FileOutputStream("ServerRMI\\Data\\Inventario.txt");
+            FileOutputStream fileOut = new FileOutputStream(".\\Data\\Inventario.txt");
             fileOut.write(input.getBytes());
             fileOut.close();
-            StringTokenizer st = new StringTokenizer(linea, "#");
+
+            
+            StringTokenizer st = new StringTokenizer(nuevalinea, "#");
+
             while (st.hasMoreTokens()) {
                 inventario.add(Integer.valueOf(st.nextToken()));
             }
-            System.out.println(linea);
+
         } catch (Exception e) {
+            System.err.println("Error en inventarioIPS(): " + e.getMessage());
             e.printStackTrace();
         } finally {
             // En el finally cerramos el fichero, para asegurarnos
@@ -108,6 +110,5 @@ public class Persistencia {
             }
         }
     }
-
 
 }
