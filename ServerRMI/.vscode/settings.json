@@ -1,7 +1,8 @@
 {
     "java.project.referencedLibraries": {
         "include": [
-            "d:\\Usuarios\\Joan Velandia\\Documentos\\Universidad\\Octavo\\Intro. Sis. Distribuidos\\Proyecto\\RMI\\build-jar\\RMI-1.0-SNAPSHOT.jar"
+            "d:\\Usuarios\\Joan Velandia\\Documentos\\Universidad\\Octavo\\Intro. Sis. Distribuidos\\Proyecto\\RMI\\build-jar\\RMI-1.0-SNAPSHOT.jar",
+            "d:\\Usuarios\\Joan Velandia\\Documentos\\Universidad\\Octavo\\Intro. Sis. Distribuidos\\Proyecto\\DistriFinal\\RMI\\build-jar\\RMI-1.0-SNAPSHOT.jar"
         ],
         "exclude": [
             "d:\\Usuarios\\Joan Velandia\\Documentos\\Universidad\\Octavo\\Intro. Sis. Distribuidos\\Proyecto\\RMI\\build-jar\\RMI.jar"
