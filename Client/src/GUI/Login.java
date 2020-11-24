@@ -16,9 +16,14 @@ import javax.swing.JTextField;
 
 public class Login extends JFrame {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField Usuario;
+	private JTextField Contrasena;
 
 	/**
 	 * Launch the application.
@@ -46,38 +51,62 @@ public class Login extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btnNewButton = new JButton("INICIAR SESION");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton.setBackground(Color.LIGHT_GRAY);
-		btnNewButton.addActionListener(new ActionListener() {
+
+		JButton BotonIniciarSesion = new JButton("INICIAR SESION");
+		BotonIniciarSesion.setFont(new Font("Tahoma", Font.BOLD, 12));
+		BotonIniciarSesion.setBackground(Color.LIGHT_GRAY);
+		BotonIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(260, 196, 144, 34);
-		contentPane.add(btnNewButton);
-		
+		BotonIniciarSesion.setBounds(260, 196, 144, 34);
+		contentPane.add(BotonIniciarSesion);
+
 		JLabel lblNewLabel = new JLabel("Usuario");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel.setBounds(104, 68, 86, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Contrase\u00F1a");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_1.setBounds(104, 124, 86, 23);
 		contentPane.add(lblNewLabel_1);
-		
-		textField = new JTextField();
-		textField.setBackground(Color.LIGHT_GRAY);
-		textField.setBounds(240, 67, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBackground(Color.LIGHT_GRAY);
-		textField_1.setBounds(240, 127, 86, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+
+		Usuario = new JTextField();
+		Usuario.setBackground(Color.LIGHT_GRAY);
+		Usuario.setBounds(240, 67, 86, 20);
+		contentPane.add(Usuario);
+		Usuario.setColumns(10);
+
+		Contrasena = new JTextField();
+		Contrasena.setBackground(Color.LIGHT_GRAY);
+		Contrasena.setBounds(240, 127, 86, 20);
+		contentPane.add(Contrasena);
+		Contrasena.setColumns(10);
+	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JTextField getUsuario() {
+		return Usuario;
+	}
+
+	public void setUsuario(JTextField usuario) {
+		Usuario = usuario;
+	}
+
+	public JTextField getContrasena() {
+		return Contrasena;
+	}
+
+	public void setContrasena(JTextField contrasena) {
+		Contrasena = contrasena;
 	}
 
 }

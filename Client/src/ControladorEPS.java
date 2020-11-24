@@ -4,19 +4,31 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JOptionPane;
 
+import GUI.GUI;
+
 public class ControladorEPS {
 
     private static final byte[] SALT = "SysDistribudos".getBytes();
     private EPS modelo;
     private Persistencia persistencia;
+    private GUI gui;
     private static ControladorEPS coord;
 
     public static void main(String[] args) throws Exception {
         coord = new ControladorEPS();
         coord.iniciarlarPersistencia();
-        coord.registrarse();
+        coord.iniciarlarGUI();
         coord.ingresarSistemas();
         coord.iniciarEPS();
+    }
+
+    private void iniciarlarGUI() {
+        this.gui = new GUI();
+        String usuario = this.gui.getRegistrarPanel().getUsuario().toString();
+        String password = this.gui.getRegistrarPanel().getPass().toString();
+        coord.registrarse(usuario, password);
+        System.out.println("usuario " + usuario);
+        System.out.println("password " + password);
     }
 
     private void ingresarSistemas() {
@@ -41,12 +53,14 @@ public class ControladorEPS {
         }
     }
 
-    private void registrarse() {
+    private void registrarse(String usuario, String password) {
 
-        String usuario = JOptionPane.showInputDialog("Ingrese su usuario");
-        String contra = JOptionPane.showInputDialog("Ingrese su contraseña");
+        /*
+         * String usuario = JOptionPane.showInputDialog("Ingrese su usuario"); String
+         * contra = JOptionPane.showInputDialog("Ingrese su contraseña");
+         */
         String hash[] = new String[2];
-        hash = coord.seguridad(usuario, contra);
+        hash = coord.seguridad(usuario, password);
         int estadoRegistro = this.persistencia.registrarse(hash);
 
         switch (estadoRegistro) {

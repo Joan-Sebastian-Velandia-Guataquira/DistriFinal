@@ -18,6 +18,10 @@ import java.awt.Font;
 
 public class Registrar extends JFrame {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField Usuario;
 	private JTextField Pass;
@@ -83,5 +87,29 @@ public class Registrar extends JFrame {
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUsuario.setBounds(81, 61, 101, 29);
 		contentPane.add(lblUsuario);
+	}
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public void setContentPane(JPanel contentPane) {
+		this.contentPane = contentPane;
+	}
+
+	public JTextField getUsuario() {
+		return Usuario;
+	}
+
+	public void setUsuario(JTextField usuario) {
+		Usuario = usuario;
+	}
+
+	public JTextField getPass() {
+		return Pass;
+	}
+
+	public void setPass(JTextField pass) {
+		Pass = pass;
 	}
 }
