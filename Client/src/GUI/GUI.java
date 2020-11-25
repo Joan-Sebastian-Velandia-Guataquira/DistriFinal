@@ -65,7 +65,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void datosTransaccion(String lab1, String lab2, String lab3, List<Integer> vacunas) {
-		List<String> cantVacunas = new ArrayList();
+		List<String> cantVacunas = new ArrayList<String>();
 		cantVacunas.add(0, lab1);
 		cantVacunas.add(1, lab2);
 		cantVacunas.add(2, lab3);

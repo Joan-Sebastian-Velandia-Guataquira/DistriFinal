@@ -16,6 +16,11 @@ import java.awt.Color;
 public class Transaccion extends JPanel {
 
 	/**
+	 *
+	 */
+	private static final long serialVersionUID = -2143470674962955489L;
+
+	/**
 	 * Create the panel.
 	 */
 	public Transaccion(GUI gui, List<Integer> Vacunas) {

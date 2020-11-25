@@ -1,6 +1,7 @@
 package EPS;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class EPS {
 
     private String username;
     private String password;
-    
+
     Registry registry;
     RMI interfazRMI;
 
@@ -20,16 +21,16 @@ public class EPS {
     static final int PORT = 1099;
 
     public boolean connectServer(String server_host_name) {
-        boolean transaccionRealizada= false;
-        try {            
-            this.IP = obtenerIP();
-            
+        boolean transaccionRealizada = false;
+        try {
+            this.IP = "25.9.158.124";
+
             registry = LocateRegistry.getRegistry(IP, PORT);
             interfazRMI = (RMI) registry.lookup(server_host_name);
 
             int suma;
             suma = interfazRMI.suma(8, 5);
-            
+
             System.out.println("La suma es: " + suma);
             transaccionRealizada = true;
         } catch (Exception e) {
@@ -46,7 +47,7 @@ public class EPS {
         return localIpAddress;
     }
 
-	public ArrayList<Integer> crearTransaccion(ArrayList<Integer> vacunas) {
+    public ArrayList<Integer> crearTransaccion(ArrayList<Integer> vacunas) throws RemoteException {
         int vac1 = 0;
         int vac2 = 0;
         int vac3 = 0;

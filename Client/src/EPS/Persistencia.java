@@ -272,7 +272,7 @@ public class Persistencia {
         ArrayList<Integer> vacunas = new ArrayList<Integer>();
         ArrayList<String> solicitudes_pendientes = new ArrayList<>();
         int n = (int) (Math.random() * 100 + 10);
-        archivo = new File(".\\Data\\Usuarios.txt");
+        archivo = new File(".\\Data\\Solicitudes.txt");
         try {
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);

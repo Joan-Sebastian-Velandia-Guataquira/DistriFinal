@@ -1,6 +1,7 @@
 package EPS;
 
 import java.nio.charset.StandardCharsets;
+import java.rmi.RemoteException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -21,22 +22,28 @@ public class ControladorEPS implements Runnable {
     private String SERVER_HOST_NAME2 = "RemotoRMI2";
     private String SERVER_HOST_NAME3 = "RemotoRMI3";
     private ArrayList<Integer> vacunasFinales;
-    
 
     public static void main(String[] args) throws Exception {
         coord = new ControladorEPS();
         coord.iniciarlarPersistencia();
         coord.iniciarlarGUI();
-        //coord.iniciarEPS();
+        // coord.iniciarEPS();
     }
-    
- private ArrayList<Integer> generarTransaccion(ArrayList<Integer> vacunas) {
-        
-        return this.modelo.crearTransaccion(vacunas);
+
+    private ArrayList<Integer> generarTransaccion(ArrayList<Integer> vacunas) {
+
+        try {
+            return this.modelo.crearTransaccion(vacunas);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
  
  public void generarTransaccion(){
-	 ArrayList<Integer> vacunas = persistencia.leerVacunas(); 
+     ArrayList<Integer> vacunas = persistencia.leerVacunas(); 
+     System.out.println("hello");
 	 gui.Transaccion(vacunas);
 	 
  }
@@ -58,13 +65,17 @@ public class ControladorEPS implements Runnable {
             System.out.println("Ingreso Satisfactorio");
             JOptionPane.showMessageDialog(null, "Ingreso satisfactoriamente", "Iniciar Sesion",
                     JOptionPane.INFORMATION_MESSAGE);
-            		coord.iniciarEPS(usuario, contra);	
+                    coord.iniciarEPS(usuario, contra);
+                    generarTransaccion();	
 
         } else {
 
             System.out.println("Datos mal");
             JOptionPane.showMessageDialog(null, "Usuario o contraseÃ±a erroneas, intente de nuevo ", "Iniciar Sesion",
                     JOptionPane.WARNING_MESSAGE);
+                    gui.setVisible(false);
+                    gui.dispose();
+                    gui = new GUI(this);
 
         }
     }
@@ -95,6 +106,7 @@ public class ControladorEPS implements Runnable {
                 System.out.println("ya registrado");
                 JOptionPane.showMessageDialog(null, "Usuario ya registrado ", "Registrarse",
                         JOptionPane.WARNING_MESSAGE);
+                        
                 break;
         }
     }
@@ -122,7 +134,7 @@ public class ControladorEPS implements Runnable {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        System.out.println("llegue hasta acá");
+        System.out.println("llegue hasta acï¿½");
         return hash;
     }
 
