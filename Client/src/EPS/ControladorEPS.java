@@ -32,12 +32,12 @@ public class ControladorEPS implements Runnable {
 
     private ArrayList<Integer> generarTransaccion2(ArrayList<Integer> vacunas) {
         try {
-            ArrayList<Integer> transaccionDevuelta = new ArrayList<Integer>();
+            List<Integer> transaccionDevuelta = new ArrayList<Integer>();
             transaccionDevuelta = this.modelo.crearTransaccion(vacunas);
             for (Integer integer : transaccionDevuelta) {
                 System.out.println("transaccionDevuelta = " + integer);
             }
-            return transaccionDevuelta;
+            return (ArrayList<Integer>) transaccionDevuelta;
         } catch (RemoteException e) {
             System.err.println("error generarTransaccion: " + e.getMessage());
             return null;

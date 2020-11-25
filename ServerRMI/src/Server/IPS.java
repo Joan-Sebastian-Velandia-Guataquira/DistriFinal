@@ -6,10 +6,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import RMI.RMI;
-import RMI.Transaccion;
+import rmi.rmi;
 
-public class IPS extends UnicastRemoteObject implements RMI, Runnable {
+public class IPS extends UnicastRemoteObject implements rmi, Runnable {
 
     /**
      *
@@ -76,32 +75,38 @@ public class IPS extends UnicastRemoteObject implements RMI, Runnable {
     }
 
     @Override
-    public List<Integer> asignarVacuna(Transaccion t) {
+    public List<Integer> asignarVacuna(int a, int b, int c) throws RemoteException {
         System.out.println("nueva Transaccion");
+        System.out.println("llego " + a + " " + b + " " + c);
+        System.out.println("Hay " + this.vacuansDisponibles1 + " " + this.vacuansDisponibles2 + " " + this.vacuansDisponibles3);
         
         List<Integer> vacunasDadas = new ArrayList<Integer>();
         int resta;
-        if (this.vacuansDisponibles1 >= t.getVacA()) {
-            this.vacuansDisponibles1 -= t.getVacA();
+        if (this.vacuansDisponibles1 >= a) {
+            this.vacuansDisponibles1 -= a;
+            vacunasDadas.add(0,0);
         } else {
-            resta = t.getVacA() - this.vacuansDisponibles1;
+            resta = a - this.vacuansDisponibles1;
             this.vacuansDisponibles1 = 0;
             vacunasDadas.add(0, resta);
         }
-        if (this.vacuansDisponibles2 >= t.getVacB()) {
-            this.vacuansDisponibles2 -= t.getVacB();
+        if (this.vacuansDisponibles2 >= b ){
+            this.vacuansDisponibles2 -= b;
+            vacunasDadas.add(1,0);
         } else {
-            resta = t.getVacB() - this.vacuansDisponibles2;
+            resta = b - this.vacuansDisponibles2;
             this.vacuansDisponibles2 = 0;
             vacunasDadas.add(0, resta);
         }
-        if (this.vacuansDisponibles3 >= t.getVacC()) {
-            this.vacuansDisponibles3 -= t.getVacC();
+        if (this.vacuansDisponibles3 >= c) {
+            this.vacuansDisponibles3 -= c;
+            vacunasDadas.add(2,0);
         } else {
-            resta = t.getVacC() - this.vacuansDisponibles3;
+            resta = c - this.vacuansDisponibles3;
             this.vacuansDisponibles3 = 0;
             vacunasDadas.add(0, resta);
         }
+        System.out.println("se envia " + vacunasDadas.get(0) + " " + vacunasDadas.get(1) + " " + vacunasDadas.get(2));
         return vacunasDadas;
     }
 

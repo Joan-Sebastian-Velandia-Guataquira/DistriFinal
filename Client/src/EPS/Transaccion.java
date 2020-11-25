@@ -1,8 +1,8 @@
-package Server;
+package EPS;
 
 
 public class Transaccion {
-    
+
     private int vacA;
     private int vacB;
     private int vacC;
@@ -37,5 +37,4 @@ public class Transaccion {
         this.vacC = vacC;
     }
     
-
 }

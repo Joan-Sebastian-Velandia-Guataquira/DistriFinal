@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.List;
 
-import RMI.RMI;
-import RMI.Transaccion;
+import rmi.rmi;
 
 public class EPS {
 
@@ -15,7 +15,7 @@ public class EPS {
     private String password;
 
     Registry registry;
-    RMI interfazRMI;
+    rmi interfazRMI;
 
     private String IP;
     static final int PORT = 1099;
@@ -27,7 +27,7 @@ public class EPS {
             this.IP = "localhost";
 
             registry = LocateRegistry.getRegistry(IP, PORT);
-            interfazRMI = (RMI) registry.lookup(server_host_name);
+            interfazRMI = (rmi) registry.lookup(server_host_name);
 
             int suma;
             suma = interfazRMI.suma(8, 5);
@@ -48,20 +48,20 @@ public class EPS {
         return localIpAddress;
     }
 
-    public ArrayList<Integer> crearTransaccion(ArrayList<Integer> vacunas) throws RemoteException {
+    public List<Integer> crearTransaccion(ArrayList<Integer> vacunas) throws RemoteException {
 
         int typeA = vacunas.get(0);
         int typeB = vacunas.get(1);
         int typeC = vacunas.get(2);
-        ArrayList<Integer> vacunasTransaccion = new ArrayList<Integer>();
+        List<Integer> vacunasTransaccion = new ArrayList<Integer>();
         for (Integer integer : vacunas) {
             System.out.println("Vacunas para enviarTrsaccion " + integer);
         }
 
         if((typeA + typeB + typeC) >= 10){
-            Transaccion nuevaTransaccion = new Transaccion(typeA, typeB, typeC);
-            System.out.println("Transaccion enviada " + nuevaTransaccion.getVacA() + " " + nuevaTransaccion.getVacB() + " " + nuevaTransaccion.getVacC());
-            vacunasTransaccion = (ArrayList<Integer>) interfazRMI.asignarVacuna(nuevaTransaccion);
+            
+            System.out.println("Transaccion enviada " + typeA  + " " + typeB + " " + typeC);
+            vacunasTransaccion = interfazRMI.asignarVacuna(typeA, typeB, typeC);
             System.out.println("Transaccion llega " + vacunasTransaccion.get(0) + " " + vacunasTransaccion.get(1) + " " + vacunasTransaccion.get(2) );
         }
         return vacunasTransaccion;
