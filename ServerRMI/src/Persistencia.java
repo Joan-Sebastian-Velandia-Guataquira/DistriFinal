@@ -45,7 +45,7 @@ public class Persistencia {
             while ((linea = br.readLine()) != null) {
                 String[] parts = linea.split("#");
                 String part1 = parts[3]; // 123
-                if (  !encontrado && (part1.equals(String.valueOf(this.lector)) || part1.equals("0")) ) {
+                if (  !encontrado && (part1.equals(String.valueOf(this.lector))) ) {
                     nuevalinea += parts[0] + "#" + parts[1] + "#" + parts[2] + "#" + String.valueOf(this.lector);
                     input += nuevalinea + "\r\n";
                     encontrado = true;

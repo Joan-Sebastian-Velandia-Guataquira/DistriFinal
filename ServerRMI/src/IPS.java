@@ -2,9 +2,13 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 
-public class IPS extends UnicastRemoteObject implements RMI.RMI, Runnable {
+import RMI.RMI;
+import RMI.Transaccion;
+
+public class IPS extends UnicastRemoteObject implements RMI, Runnable {
 
     /**
      *
@@ -66,15 +70,37 @@ public class IPS extends UnicastRemoteObject implements RMI.RMI, Runnable {
     }
 
     @Override
-    public void run() // Hilossss
-    {
+    public void run() {
 
     }
 
     @Override
-    public List<Integer> asignarVacuna(RMI.Transaccion arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<Integer> asignarVacuna(Transaccion t) {
+        
+        List<Integer> vacunasDadas = new ArrayList<Integer>();
+        int resta;
+        if (this.vacuansDisponibles1 >= t.getVacA()) {
+            this.vacuansDisponibles1 -= t.getVacA();
+        } else {
+            resta = t.getVacA() - this.vacuansDisponibles1;
+            this.vacuansDisponibles1 = 0;
+            vacunasDadas.add(0, resta);
+        }
+        if (this.vacuansDisponibles2 >= t.getVacB()) {
+            this.vacuansDisponibles2 -= t.getVacB();
+        } else {
+            resta = t.getVacB() - this.vacuansDisponibles2;
+            this.vacuansDisponibles2 = 0;
+            vacunasDadas.add(0, resta);
+        }
+        if (this.vacuansDisponibles3 >= t.getVacC()) {
+            this.vacuansDisponibles3 -= t.getVacC();
+        } else {
+            resta = t.getVacC() - this.vacuansDisponibles3;
+            this.vacuansDisponibles3 = 0;
+            vacunasDadas.add(0, resta);
+        }
+        return vacunasDadas;
     }
 
 }

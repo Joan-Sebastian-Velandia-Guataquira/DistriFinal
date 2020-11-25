@@ -7,11 +7,11 @@ public class ControladorIPS {
     private static ControladorIPS controlador;
     static final int MAXIMO_ID = 2147483647;
     static final int MINIMO_ID = 1;
-    private static int ID;
+    private static final int ID = 1;
 
     public static void main(String[] args) {
         controlador = new ControladorIPS();
-        ID = controlador.crearID();
+        //ID = controlador.crearID();
         controlador.inicializarPersistencia(ID);
     }
 
@@ -25,7 +25,7 @@ public class ControladorIPS {
 
     private void inicializarIPS(int cantVacuna1, int cantVacuna2, int cantVacuna3) {
         try {
-            this.setModelo(new IPS(cantVacuna1, cantVacuna2, cantVacuna3));
+            this.modelo = new IPS(cantVacuna1, cantVacuna2, cantVacuna3);
         } catch (Exception e) {
             System.err.println("Error inicializando IPS " + e.getMessage());
         }
