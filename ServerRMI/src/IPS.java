@@ -4,7 +4,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public class IPS extends UnicastRemoteObject implements RMI, Runnable {
+public class IPS extends UnicastRemoteObject implements RMI.RMI, Runnable {
 
     /**
      *
@@ -72,8 +72,8 @@ public class IPS extends UnicastRemoteObject implements RMI, Runnable {
     }
 
     @Override
-    public List<Integer> asignarVacuna(Transaccion t) {
-
+    public List<Integer> asignarVacuna(RMI.Transaccion arg0) {
+        // TODO Auto-generated method stub
         return null;
     }
 
