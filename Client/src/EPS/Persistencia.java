@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 public class Persistencia {
@@ -238,7 +239,7 @@ public class Persistencia {
             for (int i = 0; i <= posusuario; i++) {
                 linea = br.readLine();
             }
-            //System.out.println("linea " + linea);
+            // System.out.println("linea " + linea);
             if (password.equals(linea)) {
                 contraCorrect = true;
             } else {
@@ -263,5 +264,109 @@ public class Persistencia {
         return contraCorrect;
 
     }
+
+    public ArrayList<Integer> leerVacunas() {
+        File archivo = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        ArrayList<Integer> vacunas = new ArrayList<Integer>();
+        ArrayList<String> solicitudes_pendientes = new ArrayList<>();
+        int n = (int) (Math.random() * 100 + 10);
+        archivo = new File(".\\Data\\Usuarios.txt");
+        try {
+            fr = new FileReader(archivo);
+            br = new BufferedReader(fr);
+            String linea = "";
+            int cont = 0;
+            while (cont <= n && (linea = br.readLine()) != null) {
+                vacunas.add(Integer.valueOf(linea));
+                cont++;
+            }
+            while ((linea = br.readLine()) != null) {
+                solicitudes_pendientes.add(linea);
+            }
+            
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo Solicitudes");
+        } finally {
+            try {
+                if (null != fr) {
+                    fr.close();
+                    escrbirVacunasRestantes(solicitudes_pendientes);
+                }
+            } catch (Exception e2) {
+                System.err.println("Error cerrando arhcivo buscando usuario while " + e2.getMessage());
+            }
+        }
+        return vacunas;
+    }
+    private boolean escrbirVacunasRestantes(ArrayList<String> vacunasRestantes) {
+        File fichero2 = new File(".\\Data\\Solicitudes.txt");
+        boolean registrado = false;
+        if(!fichero2.delete()){
+            return false;
+        }
+
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        
+        try {
+            fichero = new FileWriter(".\\Data\\Solicitudes.txt");
+            
+            pw = new PrintWriter(fichero);
+            for(int i = 0; i < vacunasRestantes.size();i++){
+                pw.println(vacunasRestantes.get(i));        
+            }
+            registrado = true;
+        } catch (Exception e) {
+            System.err.println("Error creating contra file " + e.getMessage());
+            registrado = false;
+        } finally {
+            try {
+                // Nuevamente aprovechamos el finally para
+                // asegurarnos que se cierra el fichero.
+                if (null != fichero)
+                    fichero.close();
+            } catch (Exception e2) {
+                System.err.println("Error closing contra file " + e2.getMessage());
+            }
+        }
+        return registrado;
+    }
+
+	public void restaurarVacunas(int resta, String string)
+	{
+		 	File fichero2 = new File(".\\Data\\Solicitudes.txt");
+	        boolean registrado = false;
+	        if(!fichero2.delete()){
+	            System.err.println("no se elimino el fichero restaurar vacuans");
+	        }
+
+	        FileWriter fichero = null;
+	        PrintWriter pw = null;
+	        
+	        try {
+	            fichero = new FileWriter(".\\Data\\Solicitudes.txt", true);
+	            
+	            pw = new PrintWriter(fichero);
+	            for(int i = 0; i < resta;i++){
+	                pw.println(string);        
+	            }
+	            registrado = true;
+	        } catch (Exception e) {
+	            System.err.println("Error creating contra file " + e.getMessage());
+	            registrado = false;
+	        } finally {
+	            try {
+	                // Nuevamente aprovechamos el finally para
+	                // asegurarnos que se cierra el fichero.
+	                if (null != fichero)
+	                    fichero.close();
+	            } catch (Exception e2) {
+	                System.err.println("Error closing contra file " + e2.getMessage());
+	            }
+	        }
+			
+	}
 
 }

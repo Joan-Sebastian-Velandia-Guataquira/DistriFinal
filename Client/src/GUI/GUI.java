@@ -20,6 +20,7 @@ public class GUI extends JFrame {
 	private String user;
 	private ControladorEPS control;
 	private Registrarse regis;
+	private Transaccion tran;
 
 	private JPanel contentPane;
 
@@ -58,6 +59,27 @@ public class GUI extends JFrame {
 		regis = new Registrarse(this);
 		contentPane.removeAll();
 		contentPane = regis;
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+	}
+	
+	public void datosTransaccion(String lab1, String lab2, String lab3, List<Integer> vacunas) {
+		List<String> cantVacunas = new ArrayList();
+		cantVacunas.add(0, lab1);
+		cantVacunas.add(1, lab2);
+		cantVacunas.add(2, lab3);
+		control.ValidarCambios(cantVacunas, vacunas);
+	}
+	
+	public void Transaccion(List<Integer> vacunas) {
+		List<Integer> vacunasStr = new ArrayList<>();
+		vacunasStr.add(0,vacunas.get(0).intValue());
+		vacunasStr.add(1,vacunas.get(1).intValue());
+		vacunasStr.add(2,vacunas.get(2).intValue());
+		tran = new Transaccion(this, vacunasStr);
+		contentPane.removeAll();
+		contentPane = tran;
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		

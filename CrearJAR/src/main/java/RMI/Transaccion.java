@@ -1,3 +1,5 @@
+package RMI;
+
 public class Transaccion{
     
     private int vacA;

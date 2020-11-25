@@ -3,18 +3,25 @@ package EPS;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import GUI.GUI;
 
-public class ControladorEPS {
+public class ControladorEPS implements Runnable {
 
     private static final byte[] SALT = "SysDistribudos".getBytes();
     private EPS modelo;
     private Persistencia persistencia;
     private GUI gui;
     private static ControladorEPS coord;
+    private String SERVER_HOST_NAME = "RemotoRMI";
+    private String SERVER_HOST_NAME2 = "RemotoRMI2";
+    private String SERVER_HOST_NAME3 = "RemotoRMI3";
+    private ArrayList<Integer> vacunasFinales;
+    
 
     public static void main(String[] args) throws Exception {
         coord = new ControladorEPS();
@@ -22,13 +29,21 @@ public class ControladorEPS {
         coord.iniciarlarGUI();
         //coord.iniciarEPS();
     }
+    
+ private ArrayList<Integer> generarTransaccion(ArrayList<Integer> vacunas) {
+        
+        return this.modelo.crearTransaccion(vacunas);
+    }
+ 
+ public void generarTransaccion(){
+	 ArrayList<Integer> vacunas = persistencia.leerVacunas(); 
+	 gui.Transaccion(vacunas);
+	 
+ }
 
     public void iniciarlarGUI() {
         this.gui = new GUI(this);
         gui.setVisible(true);
-       // coord.registrarse(usuario, password);
-        //System.out.println("usuario " + gui.getCredenciales().get(0));
-        //System.out.println("password " + gui.getCredenciales().get(1));
     }
 
     public void ingresarSistemas(String user, String pass) {
@@ -43,6 +58,7 @@ public class ControladorEPS {
             System.out.println("Ingreso Satisfactorio");
             JOptionPane.showMessageDialog(null, "Ingreso satisfactoriamente", "Iniciar Sesion",
                     JOptionPane.INFORMATION_MESSAGE);
+            		coord.iniciarEPS(usuario, contra);	
 
         } else {
 
@@ -114,9 +130,28 @@ public class ControladorEPS {
         persistencia = new Persistencia();
     }
 
-    public void analizarSolicitudes() {
-        System.out.println("");
-
+    public void ValidarCambios(List<String> vacunasUp, List<Integer> vacunas) {
+    	int cantA = Integer.valueOf(vacunasUp.get(0));
+    	int cantB = Integer.valueOf(vacunasUp.get(1));
+    	int cantC = Integer.valueOf(vacunasUp.get(2));
+    	
+    	int resta;
+    	if(cantA != vacunas.get(0)) {
+    		resta =  Math.abs( cantA - vacunas.get(0));
+    		persistencia.restaurarVacunas(resta, "1");
+    	}
+    	if(cantA != vacunas.get(1)) {
+    		resta =  Math.abs( cantB - vacunas.get(1));
+    		persistencia.restaurarVacunas(resta, "1");
+    	}
+    	if(cantA != vacunas.get(2)) {
+    		resta =  Math.abs( cantC - vacunas.get(2));
+    		persistencia.restaurarVacunas(resta, "1");
+    	}
+    	this.vacunasFinales = new ArrayList<Integer>();
+    	this.vacunasFinales.add(0,cantA);
+    	this.vacunasFinales.add(1,cantB);
+    	this.vacunasFinales.add(2,cantC);
     }
 
     public EPS getModelo() {
@@ -127,10 +162,66 @@ public class ControladorEPS {
         modelo = model;
     }
 
-   public void iniciarEPS() {
-        modelo = new EPS();
-
-        modelo.connectServer();
+    private void iniciarEPS(String usuario, String contra) {
+        modelo = new EPS(usuario, contra);
+        run();
     }
 
+	@Override
+	public void run() {
+        ArrayList<Integer> vacunas =  new ArrayList<Integer>(); 
+        if(modelo.connectServer(SERVER_HOST_NAME)){
+            vacunas = this.vacunasFinales;
+            if(validarTransaccion(vacunas)){
+                if(modelo.connectServer(SERVER_HOST_NAME2)){
+                    vacunas = this.generarTransaccion(vacunas);
+                    if(validarTransaccion(vacunas)){
+                        if(modelo.connectServer(SERVER_HOST_NAME3)){
+                            vacunas = this.generarTransaccion(vacunas);
+                        }                
+                    }
+                }
+                
+            }
+         }else if(modelo.connectServer(SERVER_HOST_NAME2)){
+            vacunas = this.generarTransaccion(null);
+            if(validarTransaccion(vacunas)){
+                if(modelo.connectServer(SERVER_HOST_NAME)){
+                    vacunas = this.generarTransaccion(vacunas);
+                    if(validarTransaccion(vacunas)){
+                        if(modelo.connectServer(SERVER_HOST_NAME3)){
+                            vacunas = this.generarTransaccion(vacunas);
+                        }                
+                    }
+                }
+                
+            }
+         }else if(modelo.connectServer(SERVER_HOST_NAME3)){
+            vacunas = this.generarTransaccion(null);
+            if(validarTransaccion(vacunas)){
+                if(modelo.connectServer(SERVER_HOST_NAME)){
+                    vacunas = this.generarTransaccion(vacunas);
+                    if(validarTransaccion(vacunas)){
+                        if(modelo.connectServer(SERVER_HOST_NAME2)){
+                            vacunas = this.generarTransaccion(vacunas);
+                        }                
+                    }
+                }
+                
+            }
+         }else{
+             System.out.println("No se pudo contectar a ningun conectar");
+         }
+    }
+	
+	 private boolean validarTransaccion(ArrayList<Integer> vacunas) {
+	        if(vacunas.get(0) != 0 || vacunas.get(1) != 0  || vacunas.get(2) != 0){
+	            return true;
+	        }
+	        return false;
+	    }
 }
+	
+		
+	
+
