@@ -34,12 +34,13 @@ public class GUI extends JFrame {
 	public GUI(ControladorEPS control) {
 		this.control= control;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(200, 200, 550, 400);
 		login = new Login(this);
 		contentPane = login;
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		this.repaint();
 	}
 	
 	public void SetCredencialesInicio(String user, String pass) {
@@ -58,10 +59,10 @@ public class GUI extends JFrame {
 	public void registrar() {
 		regis = new Registrarse(this);
 		contentPane.removeAll();
-		contentPane = regis;
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		
+		this.getContentPane().add(tran);
+		this.revalidate();
+		this.repaint();
+		this.repaint();
 	}
 	
 	public void datosTransaccion(String lab1, String lab2, String lab3, List<Integer> vacunas) {
@@ -69,19 +70,31 @@ public class GUI extends JFrame {
 		cantVacunas.add(0, lab1);
 		cantVacunas.add(1, lab2);
 		cantVacunas.add(2, lab3);
+		System.out.println("fue a validarCambios");
 		control.ValidarCambios(cantVacunas, vacunas);
 	}
 	
 	public void Transaccion(List<Integer> vacunas) {
+
+		for (Integer integer : vacunas) {
+			System.out.println("serán antes de null " + integer);
+		}
+		System.out.println("Mostrar Panel transaccion ");
 		List<Integer> vacunasStr = new ArrayList<>();
 		vacunasStr.add(0,vacunas.get(0).intValue());
 		vacunasStr.add(1,vacunas.get(1).intValue());
 		vacunasStr.add(2,vacunas.get(2).intValue());
-		tran = new Transaccion(this, vacunasStr);
+
+		for (Integer integer : vacunasStr) {
+			System.out.println("serán null " + integer);
+		}
+
 		contentPane.removeAll();
-		contentPane = tran;
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		tran = new Transaccion(this, vacunasStr);
+		this.getContentPane().add(tran);
+		this.revalidate();
+		this.repaint();
+		System.out.println("Mostrar Panel transaccion fin");
 		
 	}
 

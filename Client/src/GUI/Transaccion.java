@@ -24,10 +24,18 @@ public class Transaccion extends JPanel {
 	 * Create the panel.
 	 */
 	public Transaccion(GUI gui, List<Integer> Vacunas) {
+		if(Vacunas != null) {
+			System.out.println("enserio es null " + Vacunas.get(0).intValue());
+			System.out.println("enserio es null " + Vacunas.get(1).intValue());
+			System.out.println("enserio es null " + Vacunas.get(2).intValue());
+		}
+		int typeA = Vacunas.get(0).intValue();
+		int typeB = Vacunas.get(1).intValue();
+		int typeC = Vacunas.get(2).intValue();
 		setLayout(null);
 		
 		JSpinner Laboratorio1 = new JSpinner();
-		Laboratorio1.setModel(new SpinnerNumberModel(Vacunas.get(0).intValue(),null,null,1));
+		Laboratorio1.setValue(typeA);
 		Laboratorio1.setBounds(283, 75, 61, 20);
 		add(Laboratorio1);
 		
@@ -47,12 +55,12 @@ public class Transaccion extends JPanel {
 		add(lblNewLabel_3);
 		
 		JSpinner Laboratorio2 = new JSpinner();
-		Laboratorio1.setModel(new SpinnerNumberModel(Vacunas.get(1).intValue(),null,null,1));
+		Laboratorio2.setValue(typeB);
 		Laboratorio2.setBounds(283, 137, 61, 20);
 		add(Laboratorio2);
 		
 		JSpinner Laboratorio3 = new JSpinner();
-		Laboratorio1.setModel(new SpinnerNumberModel(Vacunas.get(2).intValue(),null,null,1));
+		Laboratorio3.setValue(typeC);
 		Laboratorio3.setBounds(283, 204, 61, 20);
 		add(Laboratorio3);
 		
@@ -66,7 +74,9 @@ public class Transaccion extends JPanel {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				gui.datosTransaccion(Laboratorio1.getValue().toString(), Laboratorio2.getValue().toString(), Laboratorio3.getValue().toString(),Vacunas);
+				System.out.println("salio de transaccionPanel");				
+				gui.datosTransaccion(Laboratorio1.getValue().toString(), Laboratorio2.getValue().toString(), Laboratorio3.getValue().toString(), Vacunas);
+
 			}
 		});
 		btnNewButton.setBounds(263, 258, 165, 31);

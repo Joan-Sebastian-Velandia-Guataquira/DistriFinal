@@ -20,13 +20,13 @@ public class IPS extends UnicastRemoteObject implements RMI, Runnable {
     private int vacuansDisponibles3;
     static final int PUERTO_RMI = 1099;
     static final String SERVER_HOST_NAME = "java.rmi.server.hostname";
-    static final String SERVER_HOST_IP = "25.9.158.124";
+    static final String SERVER_HOST_IP = "localhost";
     static final String RMI_NAME = "RemotoRMI";
 
     public IPS(int vacuansDisponibles1, int vacuansDisponibles2, int vacuansDisponibles3) throws RemoteException {
-        this.setVacuansDisponibles1(vacuansDisponibles1);
-        this.setVacuansDisponibles2(vacuansDisponibles2);
-        this.setVacuansDisponibles3(vacuansDisponibles3);
+        this.vacuansDisponibles1 = vacuansDisponibles1;
+        this.vacuansDisponibles2 = vacuansDisponibles2;
+        this.vacuansDisponibles3 = vacuansDisponibles3;
     }
 
     public int getVacuansDisponibles2() {
@@ -77,6 +77,7 @@ public class IPS extends UnicastRemoteObject implements RMI, Runnable {
 
     @Override
     public List<Integer> asignarVacuna(Transaccion t) {
+        System.out.println("nueva Transaccion");
         
         List<Integer> vacunasDadas = new ArrayList<Integer>();
         int resta;

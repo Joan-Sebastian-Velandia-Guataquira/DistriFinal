@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Asus/Desktop/my_localrepo/DistriFinal/CrearJAR/target/CrearJAR-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:\Usuarios\Joan Velandia\Documentos\Universidad\Octavo\Intro. Sis. Distribuidos\Proyecto\DistriFinal\CrearJAR\target\CrearJAR-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -27,6 +27,7 @@ public class ControladorIPS {
     private void inicializarIPS(int cantVacuna1, int cantVacuna2, int cantVacuna3) {
         try {
             this.modelo = new IPS(cantVacuna1, cantVacuna2, cantVacuna3);
+            this.modelo.iniciarServer(this.modelo);
         } catch (Exception e) {
             System.err.println("Error inicializando IPS " + e.getMessage());
         }

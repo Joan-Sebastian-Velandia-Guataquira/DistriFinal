@@ -38,7 +38,7 @@ public class Login extends JPanel {
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				gui.registrar();
-				setVisible(false);
+				//setVisible(false);
 				
 			}
 		});
