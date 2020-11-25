@@ -1,3 +1,5 @@
+package EPS;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,24 +20,22 @@ public class ControladorEPS {
         coord = new ControladorEPS();
         coord.iniciarlarPersistencia();
         coord.iniciarlarGUI();
-        coord.ingresarSistemas();
-        coord.iniciarEPS();
+        //coord.iniciarEPS();
     }
 
-    private void iniciarlarGUI() {
-        this.gui = new GUI();
-        String usuario = this.gui.getRegistrarPanel().getUsuario().toString();
-        String password = this.gui.getRegistrarPanel().getPass().toString();
-        coord.registrarse(usuario, password);
-        System.out.println("usuario " + usuario);
-        System.out.println("password " + password);
+    public void iniciarlarGUI() {
+        this.gui = new GUI(this);
+        gui.setVisible(true);
+       // coord.registrarse(usuario, password);
+        //System.out.println("usuario " + gui.getCredenciales().get(0));
+        //System.out.println("password " + gui.getCredenciales().get(1));
     }
 
-    private void ingresarSistemas() {
-        String usuario = JOptionPane.showInputDialog("Ingrese su usuario");
-        String contra = JOptionPane.showInputDialog("Ingrese su contrase√±a");
+    public void ingresarSistemas(String user, String pass) {
+        String usuario = user;
+        String contra = pass;
         String hash[] = new String[2];
-        hash = coord.seguridad(usuario, contra);
+        hash = this.coord.seguridad(usuario, contra);
         boolean estadoIngresoSistema = this.persistencia.IngresoSistema(hash);
 
         if (estadoIngresoSistema) {
@@ -53,7 +53,7 @@ public class ControladorEPS {
         }
     }
 
-    private void registrarse(String usuario, String password) {
+    public void registrarse(String usuario, String password) {
 
         /*
          * String usuario = JOptionPane.showInputDialog("Ingrese su usuario"); String
@@ -83,7 +83,7 @@ public class ControladorEPS {
         }
     }
 
-    private String[] seguridad(String usuario, String contra) {
+   public String[] seguridad(String usuario, String contra) {
         String hash[] = new String[2];
         String generatedPassword = null;
         String hashActual;
@@ -106,10 +106,11 @@ public class ControladorEPS {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        System.out.println("llegue hasta ac·");
         return hash;
     }
 
-    private void iniciarlarPersistencia() {
+    public  void iniciarlarPersistencia() {
         persistencia = new Persistencia();
     }
 
@@ -126,7 +127,7 @@ public class ControladorEPS {
         modelo = model;
     }
 
-    private void iniciarEPS() {
+   public void iniciarEPS() {
         modelo = new EPS();
 
         modelo.connectServer();

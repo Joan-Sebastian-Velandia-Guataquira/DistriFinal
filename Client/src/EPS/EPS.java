@@ -1,7 +1,10 @@
+package EPS;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+import RMI;
 
 public class EPS {
 
